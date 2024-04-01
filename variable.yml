@@ -1,0 +1,31 @@
+- name: simple playbook for creating a file
+  hosts: all
+  become: true
+  gather_facts: true
+  vars:
+    file_path: "/root/"
+    file_name: "Dami_test.txt"
+
+  tasks:
+   # - name: creating the file now
+   #   ansible.builtin.file:
+   #     path: "{{ file_path }}{{ file_name }}"
+   #     state: touch
+   # - name: write some content into the file.
+   #   shell:
+   #     cmd: "echo holllllla > '{{ file_path }}{{ file_name}}'"
+   # - name: copy the file to the source.
+   #   ansible.builtin.template:
+   #     src: holllllla.txt.j2
+   #     dest: "{{ file_path }}{{ file_name }}"
+
+    - name: copy the file to the source
+      ansible.builtin.template:
+        src: template.txt.j2
+        dest: "{{ file_path }}{{ file_name }}"
+
+   # - name: Template the file to the remote hosts
+   #   template:
+   #     src: hollillla.txt.j2  # Ensure this file exists locally in the playbook directory or the role template directory.
+   #     dest: "{{ file_path }}{{ file_name }}"  # This is the remote path where the templated file will be placed.
+
