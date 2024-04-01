@@ -14,11 +14,7 @@
    # - name: write some content into the file.
    #   shell:
    #     cmd: "echo holllllla > '{{ file_path }}{{ file_name}}'"
-   # - name: copy the file to the source.
-   #   ansible.builtin.template:
-   #     src: holllllla.txt.j2
-   #     dest: "{{ file_path }}{{ file_name }}"
-
+   
     - name: copy the file to the source
       ansible.builtin.template:
         src: template.txt.j2
