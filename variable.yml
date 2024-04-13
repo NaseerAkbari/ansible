@@ -1,27 +1,69 @@
-- name: simple playbook for creating a file
+- name: 'Ansible facts.'
   hosts: all
-  become: true
   gather_facts: true
-  vars:
-    file_path: "/root/"
-    file_name: "Dami_test.txt"
-
   tasks:
-   # - name: creating the file now
-   #   ansible.builtin.file:
-   #     path: "{{ file_path }}{{ file_name }}"
-   #     state: touch
-   # - name: write some content into the file.
-   #   shell:
-   #     cmd: "echo holllllla > '{{ file_path }}{{ file_name}}'"
-   
-    - name: copy the file to the source
-      ansible.builtin.template:
-        src: template.txt.j2
-        dest: "{{ file_path }}{{ file_name }}"
+    - name: Print out operating system details
+      debug:
+        msg: >-
+          os_family:
+          {{ ansible_facts.os_family }},
+          distro:
+          {{ ansible_facts.distribution }}
+          {{ ansible_facts.distribution_version }},
+          kernel:
+          {{ ansible_facts.kernel }}
 
-   # - name: Template the file to the remote hosts
-   #   template:
-   #     src: hollillla.txt.j2  # Ensure this file exists locally in the playbook directory or the role template directory.
-   #     dest: "{{ file_path }}{{ file_name }}"  # This is the remote path where the templated file will be placed.
 
+
+# - name: Capture output of whoami command
+#   hosts: all
+#   become: true
+#   gather_facts: true
+#   tasks:  # Corrected from 'task' to 'tasks' to properly define a list of tasks
+#     - command: whoami  # This is the correct command to capture the username of the user.
+#       register: login  # Correct alignment under the task.
+
+#     # Optionally, you can add a task to debug and print the result to verify it
+#     - debug:
+#         msg: "The logged in user is {{ login.stdout }}"
+
+
+
+
+
+# - name: simple playbook for managing a package
+#   hosts: all
+#   become: true
+#   gather_facts: true
+#   vars:
+#     package: tree
+#     package_state: absent  
+#   tasks:
+#     - name: Ensure the state of the tree package
+#       apt:
+#         update_cache: true
+#         name: "{{ package }}"
+#         state: "{{ package_state }}"
+#     - name: debug
+#       debug: 
+#         msg: "The variable is {{ package }}, and {{ package_state }}"
+
+  # vars:
+  #   file_path: "/root/"
+  #   file_name: "holla_Ansible.txt"
+
+  # tasks:
+  #   - name: copy the file to the source
+  #     ansible.builtin.template:
+  #       src: template.txt.j2
+  #       dest: "{{ file_path }}{{ file_name }}"
+
+  #   - name: creating the file now
+  #     ansible.builtin.file:
+  #       path: "{{ file_path }}{{ file_name }}"
+  #       state: touch
+  #   - name: write some content into the file.
+  #     shell:
+  #       cmd: "echo holllllla again from the last module! >> '{{ file_path }}{{ file_name}}'"
+    
+ 
