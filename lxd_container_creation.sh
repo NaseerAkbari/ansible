@@ -33,7 +33,6 @@ do
     echo "Creating $containerName with IP $containerIP"
 
     # Determine the correct OS image to use
-    # Determine the correct OS image to use
     case $osType in
         Ubuntu)
             image="ubuntu:22.04"
@@ -55,15 +54,11 @@ do
 
     # Commands specific to AlmaLinux for installing and starting SSH
     if [ "$osType" = "Alma" ]; then
-        # lxc exec $containerName -- dnf install -y openssh-server >> /dev/null
-        # lxc exec $containerName -- systemctl start sshd
-        # lxc exec $containerName -- systemctl enable sshd
         lxc exec $containerName -- bash -c 'dnf install -y openssh-server > /dev/null 2>&1'
         lxc exec $containerName -- bash -c 'systemctl start sshd > /dev/null 2>&1'
         lxc exec $containerName -- bash -c 'systemctl enable sshd > /dev/null 2>&1'
 
     fi
-
 
     # Now, configure a static IP for the container
     lxc stop $containerName
@@ -71,6 +66,7 @@ do
     lxc config device set $containerName eth0 ipv4.address $containerIP
     lxc start $containerName
 
+    # Now preparing the SSH Connection into the each container.
     lxc exec $containerName -- mkdir -p /root/.ssh
     lxc exec $containerName -- chmod 700 /root/.ssh
     lxc file push "$publicKeyPath" "$containerName/root/.ssh/authorized_keys"
