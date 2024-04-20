@@ -1,17 +1,71 @@
-- name: 'Ansible facts.'
+---
+- name: greetins 
   hosts: all
   gather_facts: true
+  debugger: always
+  vars:
+    greetings: "hello i am the fixed variable!"
   tasks:
-    - name: Print out operating system details
+    - name: printing the var.
       debug:
-        msg: >-
-          os_family:
-          {{ ansible_facts.os_family }},
-          distro:
-          {{ ansible_facts.distribution }}
-          {{ ansible_facts.distribution_version }},
-          kernel:
-          {{ ansible_facts.kernel }}
+        msg: "{{ greetings }}"
+
+
+
+
+
+
+
+# - name: Gather server info
+#   hosts: all
+#   tasks:
+#     - name: Print server role
+#       debug:
+#         msg: "Server role is {{ ansible_local.server_info.node_role }}."
+
+#     - name: Check for application presence
+#       debug:
+#         msg: "Applications installed: {{ ansible_local.server_info.applications }}."
+
+#     - name: Display inventory location
+#       debug:
+#         msg: >
+#           This server is located in {{ ansible_local.server_info.inventory.datacenter }},
+#           rack {{ ansible_local.server_info.inventory.rack }},
+#           unit {{ ansible_local.server_info.inventory.unit }}.
+
+#     - name: Report hardware details
+#       debug:
+#         msg: >
+#           Hardware specs - CPU: {{ ansible_local.server_info.hardware.cpu }},
+#           Memory: {{ ansible_local.server_info.hardware.memory_gb }} GB,
+#           Storage: SSD {{ ansible_local.server_info.hardware.storage_tb.ssd }} TB,
+#           HDD {{ ansible_local.server_info.hardware.storage_tb.hdd }} TB.
+#     - name: Set nginx_state
+#       when: ansible_facts.services.nginx.state is defined
+#       set_fact:
+#         nginx_state: "{{ ansible_facts.services.nginx.state }}"
+
+
+
+
+# - name: 'Ansible facts.'
+#   hosts: all
+#   gather_facts: true
+#   tasks:
+#     - name: Print out operating system details
+#       debug:
+#         msg: >-
+#           os_family:
+#           {{ ansible_facts.os_family }},
+#           distro:
+#           {{ ansible_facts.distribution }}
+#           {{ ansible_facts.distribution_version }},
+#           kernel:
+#           {{ ansible_facts.kernel }}
+
+
+
 
 
 
